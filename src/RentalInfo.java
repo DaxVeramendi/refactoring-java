@@ -14,6 +14,7 @@ public class RentalInfo {
 
     double totalAmount = 0;
     int frequentEnterPoints = 0;
+    int lday = 0;
     String result = "Rental Record for " + customer.getName() + "\n";
     for (MovieRental r : customer.getRentals()) {
       double thisAmount = 0;
@@ -21,19 +22,16 @@ public class RentalInfo {
       // determine amount for each movie
       if (movies.get(r.getMovieId()).getCode().equals(reg)) {
         thisAmount = 2;
-        if (r.getDays() > 2) {
-          thisAmount = ((r.getDays() - 2) * 1.5) + thisAmount;
-        }
+        lday = 2;
       }
       if (movies.get(r.getMovieId()).getCode().equals(ne)) {
         thisAmount = r.getDays() * 3;
       }
       if (movies.get(r.getMovieId()).getCode().equals(chi)) {
         thisAmount = 1.5;
-        if (r.getDays() > 3) {
-          thisAmount = ((r.getDays() - 3) * 1.5) + thisAmount;
-        }
+        lday = 3;
       }
+      if (!movies.get(r.getMovieId()).getCode().equals(ne) && r.getDays() > lday) thisAmount = ((r.getDays() - lday) * 1.5) + thisAmount;
 
       //add frequent bonus points
       frequentEnterPoints++;
